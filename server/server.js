@@ -4,14 +4,25 @@ let bodyParser = require('body-parser');
 let morgan = require('morgan');
 let app = express();
 
+let sites = {'google': {
+                    queued: false,
+                    site: 'www.google.com',
+                    html: ''
+             },
+             'walmart' : {
+                    queued: false,
+                    site: 'www.google.com',
+                    html: ''
+              }
+};
 
 app.use(morgan('dev'));
 app.use(express.static('client'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.get('/', (req, res) =>
-   console.log(req)
+app.get('/:site', (req, res) =>
+  res.json(sites)
 );
 
 
