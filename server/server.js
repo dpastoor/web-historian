@@ -25,7 +25,7 @@ app.get('/:sites', (req, res) => {
     if (sites[req.params.sites]) {
       res.json(sites[req.params.sites])
     } else {
-      res.status(404).send()
+      res.status(404).sendFile(path.resolve(__dirname, "../client/404notfound.html"))
     }
 }
 );
