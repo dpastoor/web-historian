@@ -21,14 +21,16 @@ app.use(express.static('client'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.get('/:sites', (req, res) => {
-    if (sites[req.params.sites]) {
-      res.json(sites[req.params.sites])
-    } else {
-      res.status(404).sendFile(path.resolve(__dirname, "../client/404notfound.html"))
-    }
-}
-);
+app.param('sites', (req, res, next, site) => {
+  if (sites[site]) {
+    req.site = sites[site];
+    next();
+  } else {
+    res.status(404).sendFile(path.resolve(__dirname, "../client/404notfound.html"));
+  }
+});
+
+app.get('/:sites', (req, res) => res.json(req.site));
 
 
 var port = 3000;
