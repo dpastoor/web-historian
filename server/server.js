@@ -11,7 +11,7 @@ let sites = {'google': {
              },
              'walmart' : {
                     queued: false,
-                    site: 'www.google.com',
+                    site: 'www.walmart.com',
                     html: ''
               }
 };
@@ -21,8 +21,13 @@ app.use(express.static('client'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.get('/:site', (req, res) =>
-  res.json(sites)
+app.get('/:sites', (req, res) => {
+    if (sites[req.params.sites]) {
+      res.json(sites[req.params.sites])
+    } else {
+      res.status(404).send()
+    }
+}
 );
 
 
