@@ -7,22 +7,22 @@ let redis = require('redis');
 let _ = require('lodash');
 let app = express();
 let sites = {'google': {
-                    queued: false,
+                    queued: true,
                     site: 'www.google.com',
                     html: ''
              },
              'walmart' : {
-                    queued: false,
+                    queued: true,
                     site: 'www.walmart.com',
                     html: ''
               },
              'costco' : {
-                    queued: false,
+                    queued: true,
                     site: 'www.costco.com',
                     html: 'other text'
              },
              'facebook' : {
-                    queued: false,
+                    queued: true,
                     site: 'www.facebook.com',
                     html: 'more text'
               }
@@ -33,8 +33,6 @@ _.forEach(sites, function(s, key) {
   client.set(key, JSON.stringify(s));
 });
 
-client.get('google', (err, value) => console.log(value));
-client.get('facebook', (err, value) => console.log(value));
 app.use(morgan('dev'));
 app.use(express.static('client'));
 app.use(bodyParser.urlencoded({extended: true}));
