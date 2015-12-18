@@ -44,6 +44,7 @@ app.param('sites', (req, res, next, site) => {
       req.site = JSON.parse(value);
       next();
     } else {
+      client.set(site, JSON.stringify({queued: true, site: 'www.' + site + '.com', html: ""}));
       res.status(404).sendFile(path.resolve(__dirname, "../client/404notfound.html"));
     }
   });
