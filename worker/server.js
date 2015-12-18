@@ -23,8 +23,6 @@ let getAndProcessHTML = function(siteKey) {
 };
 client.get('toprocess', (err, value) => {
   let allValues = JSON.parse(value);
-  console.log('----first value---')
-  console.log(allValues[0])
-  console.log('----starting to process HTML')
-  getAndProcessHTML(allValues[0])
+  _.forEach(allValues, (value) => getAndProcessHTML(value));
+  client.set('toprocess', JSON.stringify([]));
 });
