@@ -49,14 +49,10 @@ app.param('sites', (req, res, next, site) => {
     } else {
       client.set(site, JSON.stringify({queued: true, site: 'www.' + site + '.com', html: ""}));
       client.get('toprocess', (err, value) => {
-        console.log('--value--')
         let newValue = JSON.parse(value);
-        console.log(newValue)
-        newValue.push(site)
-        console.log('--value after pushing --')
-        console.log(newValue)
-        client.set('toprocess', JSON.stringify(newValue))
-      })
+        newValue.push(site);
+        client.set('toprocess', JSON.stringify(newValue));
+      });
       res.status(404).sendFile(path.resolve(__dirname, "../client/404notfound.html"));
     }
   });
